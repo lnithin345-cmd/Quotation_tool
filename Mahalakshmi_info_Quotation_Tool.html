@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quotation Format</title>
+
+<style>
+    body { font-family: Arial, sans-serif; padding: 20px; margin: 0; background:#eee; }
+    .container { width: 100%; max-width: 900px; margin: auto; background:white; padding:20px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+    table, th, td { border: 1px solid #000; }
+    th, td { padding: 6px; font-size: 14px; }
+    .header { text-align: center; font-size: 20px; font-weight: bold; }
+    .flex { display: flex; justify-content: space-between; }
+    .btn { padding: 8px 14px; background: #007bff; color: #fff; border: none; cursor: pointer; border-radius:4px; }
+    .btn-danger { background: red; color:#fff; border:none; padding:4px 8px; cursor:pointer; border-radius:4px; }
+    .right { text-align: right; }
+    .no-print { } /* Buttons and controls */
+
+    @media print {
+        .no-print, #itemTable td:last-child, #itemTable th:last-child { display: none !important; }
+    }
+</style>
+</head>
+
+<body>
+<div class="container" id="quote">
+
+    <!-- HEADER -->
+    <div style="width:100%; border-bottom:3px solid #f4a259; padding-bottom:10px; margin-bottom:15px; display:flex; justify-content:space-between;">
+        <div>
+            <div style='font-size:20px; font-weight:bold;' contenteditable="true">MYSTERY COMPUTERS</div>
+            <div style='color:gray;' contenteditable="true">GSTIN: 29BFGPS0502B1ZV</div>
+        </div>
+        <div style='text-align:right; color:gray;' contenteditable="true">
+            NO 251, 2nd Cross, 3rd Main<br>Hanumanth Nagar<br>Bangalore - 560019
+        </div>
+    </div>
+
+    <!-- TITLE -->
+    <div class="header">QUOTATION</div>
+
+    <!-- QUOTATION INFO -->
+    <div class="flex">
+        <div>
+            <strong>To:</strong><br>
+            <div contenteditable="true">Customer Name<br>Customer Address</div>
+        </div>
+        <div>
+            <strong>Quotation No:</strong> <span contenteditable="true">Q-001</span><br>
+            <strong>Date:</strong> <input id="qDate" type="date"><br>
+            <strong>Valid Upto:</strong> <input id="validUpto" type="date"><br>
+            <strong>Payment Terms:</strong> <span contenteditable="true">Advance</span>
+        </div>
+    </div>
+
+    <!-- ITEMS TABLE -->
+    <table id="itemTable">
+    <thead>
+    <tr>
+        <th>SN</th>
+        <th>Description</th>
+        <th>HSN/SAC</th>
+        <th>Qty</th>
+        <th>Unit</th>
+        <th>Rate</th>
+        <th>Total</th>
+        <th>CGST 9%</th>
+        <th>SGST 9%</th>
+        <th class="no-print">Remove</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>1</td>
+        <td contenteditable="true">New Item</td>
+        <td contenteditable="true">0000</td>
+        <td contenteditable="true" class="qty">1</td>
+        <td contenteditable="true">Item</td>
+        <td contenteditable="true" class="rate">0</td>
+        <td class="total">0.00</td>
+        <td class="cgst">0.00</td>
+        <td class="sgst">0.00</td>
+        <td class="no-print"><button class="btn-danger" type="button" onclick="removeRow(this)">X</button></td>
+    </tr>
+    </tbody>
+    </table>
+
+    <br>
+    <button class="btn no-print" type="button" onclick="addItem()">+ Add Item</button>
+
+    <!-- TOTALS TABLE -->
+    <table style="width:100%; border-collapse:collapse; margin-top:20px;">
+        <tr><th>Description</th><th class="right">Amount</th></tr>
+        <tr><td>Subtotal</td><td id="subtotal" class="right">0.00</td></tr>
+        <tr><td>CGST Total</td><td id="cgstTotal" class="right">0.00</td></tr>
+        <tr><td>SGST Total</td><td id="sgstTotal" class="right">0.00</td></tr>
+        <tr><td style="font-weight:bold;">Grand Total</td><td id="grandTotal" class="right" style="font-weight:bold;">0.00</td></tr>
+    </table>
+
+    <div style="margin-top:20px;">
+        <strong>Amount in Words:</strong>
+        <span id="amountWords" contenteditable="true" style="font-weight:bold;">Zero Rupees and Zero Paise Only</span>
+    </div>
+
+    <!-- BANK + TERMS + SIGNATURE -->
+    <div style="display:flex; justify-content:space-between; margin-top:40px;">
+
+        <!-- LEFT SIDE -->
+        <div style="width:55%; font-size:14px;">
+            <strong>Bank Details:</strong><br>
+            <div contenteditable="true">
+                Account Name: Mystery Computers<br>
+                Bank: SBI<br>
+                A/C No: 1234567890<br>
+                IFSC: SBIN0000001
+            </div>
+            <br>
+            <strong>Terms & Conditions:</strong>
+            <ul contenteditable="true">
+                <li>Goods once sold will not be taken back.</li>
+                <li>Warranty as per manufacturer terms.</li>
+                <li>Quotation valid for 10 days only.</li>
+            </ul>
+        </div>
+
+        <!-- RIGHT SIGNATURE -->
+        <div style="width:40%; text-align:right; display:flex; flex-direction:column; justify-content:flex-end;">
+            <div style="font-weight:bold; margin-bottom:60px;">For Mystery Computers</div>
+            <div style="border-top:1px solid #000; width:250px; margin-left:auto; text-align:center;">
+                Authorized Signature
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer contenteditable="true" style="margin-top:40px; text-align:center; font-size:12px; border-top:1px solid #000; padding-top:8px;">
+        Phone: +91 98765 43210 | Email: info@mysterycomputers.com | Website: www.mysterycomputers.com<br>
+        <em>Authorized Dealers in Computer Peripherals, Networking, CCTV Solutions, & IT Support</em>
+    </footer>
+
+    <!-- ACTION BUTTONS -->
+    <div style="margin-top:25px; text-align:center;" class="no-print">
+        <button class="btn" onclick="printPDF()">Print / Save as PDF</button>
+    </div>
+
+</div>
+
+<script>
+// Auto-date and initialize
+document.addEventListener("DOMContentLoaded", () => {
+    const d = new Date();
+    document.getElementById('qDate').valueAsDate = d;
+    let valid = new Date(); valid.setDate(valid.getDate() + 10);
+    document.getElementById('validUpto').valueAsDate = valid;
+    refreshCalc();
+    updateAmountWords();
+});
+
+// Automatically recalculate on input or edit
+document.addEventListener('input', () => {
+    refreshCalc();
+    updateAmountWords();
+});
+
+function refreshCalc() {
+    let subtotal = 0, cg = 0, sg = 0;
+    document.querySelectorAll("#itemTable tbody tr").forEach(row => {
+        const qty = parseFloat(row.querySelector('.qty').innerText) || 0;
+        const rate = parseFloat(row.querySelector('.rate').innerText) || 0;
+        const total = qty * rate;
+        const cgst = total * 0.09;
+        const sgst = total * 0.09;
+        row.querySelector('.total').innerText = total.toFixed(2);
+        row.querySelector('.cgst').innerText = cgst.toFixed(2);
+        row.querySelector('.sgst').innerText = sgst.toFixed(2);
+        subtotal += total; cg += cgst; sg += sgst;
+    });
+
+    document.getElementById('subtotal').innerText = subtotal.toFixed(2);
+    document.getElementById('cgstTotal').innerText = cg.toFixed(2);
+    document.getElementById('sgstTotal').innerText = sg.toFixed(2);
+    document.getElementById('grandTotal').innerText = (subtotal + cg + sg).toFixed(2);
+}
+
+function addItem() {
+    const tbody = document.querySelector('#itemTable tbody');
+    const index = tbody.querySelectorAll('tr').length + 1;
+    tbody.insertAdjacentHTML('beforeend', `
+        <tr>
+            <td>${index}</td>
+            <td contenteditable="true">New Item</td>
+            <td contenteditable="true">0000</td>
+            <td contenteditable="true" class="qty">1</td>
+            <td contenteditable="true">Item</td>
+            <td contenteditable="true" class="rate">0</td>
+            <td class="total">0.00</td>
+            <td class="cgst">0.00</td>
+            <td class="sgst">0.00</td>
+            <td class="no-print"><button class="btn-danger" onclick="removeRow(this)">X</button></td>
+        </tr>
+    `);
+    refreshCalc();
+}
+
+function removeRow(btn) {
+    btn.closest('tr').remove();
+    refreshCalc();
+}
+
+function convertNumberToWords(num){
+    const ones = ["","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen"];
+    const tens = ["","","Twenty","Thirty","Forty","Fifty","Sixty","Seventy","Eighty","Ninety"];
+    function words(n){
+        if(n < 20) return ones[n];
+        if(n < 100) return tens[Math.floor(n / 10)] + " " + ones[n % 10];
+        if(n < 1000) return ones[Math.floor(n / 100)] + " Hundred " + words(n % 100);
+        if(n < 100000) return words(Math.floor(n / 1000)) + " Thousand " + words(n % 1000);
+        if(n < 10000000) return words(Math.floor(n / 100000)) + " Lakh " + words(n % 100000);
+        return words(Math.floor(n / 10000000)) + " Crore " + words(n % 10000000);
+    }
+    return words(num).trim();
+}
+
+function updateAmountWords(){
+    const grand = parseFloat(document.getElementById('grandTotal')?.innerText) || 0;
+    const rupees = Math.floor(grand);
+    const paise = Math.round((grand - rupees) * 100);
+    let words = convertNumberToWords(rupees) + " Rupees";
+    if (paise > 0) {
+        words += " and " + convertNumberToWords(paise) + " Paise";
+    }
+    document.getElementById('amountWords').innerText = words + " Only";
+}
+
+function printPDF(){ window.print(); }
+</script>
+
+</body>
+</html>
